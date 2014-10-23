@@ -16,6 +16,7 @@ see example.js - uses fs.readFileSync as supported by **brfs**. Use base64 encod
 npm install -g browserify -opa
 git clone https://github.com/NHQ/jsynth-file-sample
 cd jsynth-file-sample
+npm install
 opa -e example.js -o public/bundle.js -t brfs
 ```
 
