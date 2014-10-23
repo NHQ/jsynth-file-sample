@@ -8,9 +8,10 @@
   },
   "browserify": {
     "transform": "brfs"
-  },
-  "dependencies": {
-    "base64-arraybuffer": ""
+  },  
+  "devDependencies": {
+    "base64-arraybuffer": "",
+    "brfs":""
   },
   "repository": "",
   "author": {

@@ -10,30 +10,12 @@ npm install jsynth-file-sample
 
 ## usage
 
-example.js - use fs.readFileSync as supported by **brfs**. Use base64 encoding.
+see example.js - uses fs.readFileSync as supported by **brfs**. Use base64 encoding.
 
-```js
-var fs = require('fs')
-,   fileBuff = require('./')
-,   context = new webkitAudioContext()
-;
-
-var file = fs.readFileSync('./loop.wav', 'base64'); // <----  
-
-var sample = fileBuff(context, file);
-
-sample.loop = true;
-
-sample.connect(context.destination)
-
-sample.start(0)
 ```
-
-To run example.js
-```js
 npm install -g browserify -opa
 git clone https://github.com/NHQ/jsynth-file-sample
 cd jsynth-file-sample
-opa -n -e example.js
+opa -e example.js -o public/bundle.js -t brfs
 ```
 
