@@ -3,11 +3,9 @@
 module.exports = function(context, buff, cb){
   
   var name = buff.constructor.name
-
+  
   if(name == 'ArrayBuffer'){
     
-    console.log(name)
-  
     context.decodeAudioData(buff, function(data){
       var source = context.createBufferSource()
       source.buffer = data
@@ -18,8 +16,9 @@ module.exports = function(context, buff, cb){
       source.connect(gain)
       source._connect = source.connect
       source.connect = gain.connect
+      console.log(source)
       cb(null, source) 
-    }, function(err){cb(err, null)})
+    }, function(err){console.log(err);cb(err, null)})
 	
   }else if(name == 'Float32Array'){
   
