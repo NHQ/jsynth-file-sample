@@ -16,7 +16,6 @@ module.exports = function(context, buff, cb){
       source.connect(gain)
       source._connect = source.connect
       source.connect = gain.connect
-      console.log(source)
       cb(null, source) 
     }, function(err){console.log(err);cb(err, null)})
 	
@@ -38,6 +37,7 @@ module.exports = function(context, buff, cb){
     gain.channelCount = 1
     gain.channelCountMode = 'explicit'
     gain.channelInterpretation = 'speakers'
+    source.gain = gain
     source.connect(gain)
     source._connect = source.connect
     source.connect = gain.connect
