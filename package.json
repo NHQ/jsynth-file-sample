@@ -7,8 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "amod": "^2.0.0",
     "base64-arraybuffer": "",
-    "brfs": ""
+    "brfs": "",
+    "domready": "^1.0.8",
+    "jsynth": "^2.8.0"
   },
   "repository": "",
   "author": {
@@ -36,5 +39,8 @@
   "directories": {},
   "_shasum": "06ff1a92fda678a9465da89de4821a5d4caa917c",
   "_from": "jsynth-file-sample@",
-  "_resolved": "https://registry.npmjs.org/jsynth-file-sample/-/jsynth-file-sample-1.0.0.tgz"
+  "_resolved": "https://registry.npmjs.org/jsynth-file-sample/-/jsynth-file-sample-1.0.0.tgz",
+  "dependencies": {
+    "jdelay": "^9.1.0"
+  }
 }
