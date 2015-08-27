@@ -15,6 +15,8 @@ ready(function(){
   var buff = b2a.decode(file);
 
   fileBuff(context, buff, function(e, source){
+    //source.connect(context.destination)
+    //source.start(0)
     gotSource(e,source)
   })
 
@@ -72,10 +74,11 @@ ready(function(){
         return a*((i/2) + od(i, s % l < scb * 12 * sr ? Math.floor(spb * 1/3): Math.floor(spb * odist), 1 - f, 1 - m))  
       }
     })
+    window.woohooGlobal = synth
     source.loop = true
     //source.playbackRate.value = 5/9;
-    source.connect(synth)
     synth.connect(context.destination)
+    source.connect(synth)
     source.start(context.currentTime)
   };
 
