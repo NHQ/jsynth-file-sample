@@ -6,10 +6,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "browserify": {
+    "transform": [
+      "browserify-shim",
+      "brfs"
+    ]
+  },
+  "browserify-shim": {
+    "@tensorflow/tfjs": "tensorflow"
+  },
   "devDependencies": {
     "amod": "^2.0.0",
     "base64-arraybuffer": "",
     "brfs": "",
+    "browserify-shim": "^3.8.14",
     "domready": "^1.0.8",
     "jsynth": "^2.8.0"
   },
@@ -41,6 +51,7 @@
   "_from": "jsynth-file-sample@",
   "_resolved": "https://registry.npmjs.org/jsynth-file-sample/-/jsynth-file-sample-1.0.0.tgz",
   "dependencies": {
+    "@tensorflow/tfjs": "^0.10.3",
     "jdelay": "^9.1.0"
   }
 }

@@ -4,16 +4,37 @@ var jdelay = require('jdelay')
 var jsynth = require('jsynth')
 var amod = require('amod')
 var ready = require('domready')
+var touchdown = require('../touchdown')
 
 var fileBuff = require('./')
 var context = new AudioContext()
-var file = fs.readFileSync('./loop_ratatat.wav', 'base64');
+var file = fs.readFileSync('../../Downloads/yah.mp3', 'base64');
+
+touchdown.start(document.body)
+var x = 0, y =0
+var w = window.innerWidth
+var h = window.innerHeight
+document.body.addEventListener('mousemove', function(e){
+  x = e.pageX / w
+  y = e.pageY / h
+})
+
+document.body.addEventListener('touchdown', dv)
+document.body.addEventListener('deltavector', dv)
+document.body.addEventListener('liftoff', dv)
+
+
+
+function dv(ev){
+  x = ev.detail.x / w
+  y = ev.detail.y / h
+}
+
 
 ready(function(){
 
 
   var buff = b2a.decode(file);
-
   fileBuff(context, buff, function(e, source){
     //source.connect(context.destination)
     //source.start(0)
@@ -23,56 +44,27 @@ ready(function(){
 
   function gotSource (err, source){
     var sr = context.sampleRate
-    var bpm = 115
+    var bpm = 92
     var scb = 60 / bpm
     var spb = Math.floor(sr * scb)
     var l = source.buffer.getChannelData(0).length
     var f = .67
     var m = .07
-    var dist = 16 
+    var dist = 1/4
     var odist = 32
     var d = jdelay(spb * 4, f, m)
     var od = jdelay(spb * 4, f, m)
     var mod = 0
     var a = 1
-    var warble = jdelay(spb * 1/3, 1, 1)
+    var warble = jdelay(spb , 1, 1)
     var synth = jsynth(context, function(t, s, i){
-      if(s > l * 2 && s % l > l / 2) a = amod(3/4, 3/8, t, 1 / scb / amod(9, 6, t, 1 / scb / 24)) 
+      a = amod(3/4, 1/8 * ((x) + (y)), t, (2 * bpm / 60)) 
 
-      else a = 1
-      if(s < l * 1.5){
-        //(d(i, s % l < scb * 12 * sr ? Math.floor(spb * 1/3 - mod): spb * dist, 1 - f, 1 - m))  
-        f += .0000000005
-        m += .00000000005
-        d(i* a, Math.floor(spb * Math.floor(dist)), 1 -f, 1-m)
-        return  i*a//warble(i, spb * 1 / 3, f, m)
-      }
-      else{
-        if(s % l  === 0){ 
-          //dist+=2
-          od = d
-          odist = 32 
-          dist = 16 
-          f = .37
-          m = .07
-          mod = 0
-          d = jdelay(spb * dist, f, m)
-        }
-        else if(s % l ===  Math.floor(l / 2)){
-          od = d
-          f = 0.37
-          m = 0.07
-          odist = 32//dist 
-          dist = 32
-          mod = scb * sr * 1/2
-          d = jdelay(spb * dist, f, m)
-        }
         f += .0000000005
         m += .00000000005
         
-        d(i* a, Math.floor(spb * Math.floor(dist)), 1 -f, 1-m)
-        return a*((i/2) + od(i, s % l < scb * 12 * sr ? Math.floor(spb * 1/3): Math.floor(spb * odist), 1 - f, 1 - m))  
-      }
+        //return d(i* a, Math.floor(spb * Math.floor(dist * (x * y))), 1 -x, 1-y)
+        return a*((i) + od(i, Math.floor(spb * dist * (y)),   x, 1))  
     })
     window.woohooGlobal = synth
     source.loop = true
